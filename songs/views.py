@@ -31,3 +31,10 @@ class SongDetail(APIView):
         song = get_object_or_404(Song, pk=pk)
         serializer = SongSerializer(song)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk, format=None):
+        song = get_object_or_404(Song, pk=pk)
+        serializer = SongSerializer(song, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
