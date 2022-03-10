@@ -38,3 +38,9 @@ class SongDetail(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk, format=None):
+        song = get_object_or_404(Song, pk=pk)
+        song.delete()
+        # regarding the return, the user story stated to return a 200 status code; however, I typically had put a 204 NO CONTENT code
+        return Response(status=status.HTTP_200_OK)
