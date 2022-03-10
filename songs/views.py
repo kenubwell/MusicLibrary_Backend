@@ -12,13 +12,22 @@ class SongsList(APIView):
 
     def get(self, request, format=None):
         songs = Song.objects.all()
-        # this is going to take our songs table and convert to json
+        # the following serializer is going to take our songs table and convert to json
         serializers = SongSerializer(songs, many=True)
         return Response(serializers.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         serializers = SongSerializer(data=request.data)
-        # this validates that API user input is true or accurate to the database
+        # the following validates that API user input is true or accurate to the database
         serializers.is_valid(raise_exception=True)
         serializers.save()
         return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+
+class SongDetail(APIView):
+    # A class-based view that retrieves (by id), updates, or deletes a song
+
+    def get(self, request, pk, format=None):
+        song = get_object_or_404(Song, pk=pk)
+        serializer = SongSerializer(song)
+        return Response(serializer.data, status=status.HTTP_200_OK)
