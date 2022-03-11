@@ -140,6 +140,31 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add_Like",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/music/6/like/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"music",
+						"6",
+						"like",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
