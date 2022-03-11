@@ -42,5 +42,18 @@ class SongDetail(APIView):
     def delete(self, request, pk, format=None):
         song = get_object_or_404(Song, pk=pk)
         song.delete()
-        # regarding the return, the user story stated to return a 200 status code; however, I typically had put a 204 NO CONTENT code
+        # self-note: regarding the return, the user story stated to return a 200 status code; however, I typically had put a 204 NO CONTENT code
         return Response(status=status.HTTP_200_OK)
+
+
+class SongLike(APIView):
+    # A class-based view to add a "like" to a song
+
+    # self-note: For the following function, the G4G reference https://www.geeksforgeeks.org/handling-ajax-request-in-django/ reflected a GET method request
+    # However, it was advised by our instructor to use a PUT request which makes more sense
+    def put(self, request, pk, format=None):
+        song = get_object_or_404(Song, pk=pk)
+        serializer = SongSerializer(song)
+        song.likes += 1
+        song.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
